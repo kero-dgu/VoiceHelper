@@ -146,11 +146,8 @@ public class VoiceHelper extends Activity {
     public void onReceive(Context context, Intent intent)
     {
       if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
-        // 電池残量を県産
-        int scale = intent.getIntExtra("scale", 0);
         int level = intent.getIntExtra("level", 0);
-        float battery_power = level/scale;
-        battery_power_str_ = nf_ptr_.format(battery_power);
+        battery_power_str_ = String.valueOf(level) + "%";
       }
     }
   };
@@ -202,7 +199,9 @@ public class VoiceHelper extends Activity {
         break;
       // 時間確認
       case "何時":
-        speak("19時50分です。");
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("H時m分");
+        speak(sdf.format(cal.getTime()) + "です。");
         break;
       // 曜日確認
       case "何曜日":
